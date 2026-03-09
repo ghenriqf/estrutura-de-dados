@@ -2,10 +2,12 @@
 
 using namespace std;
 
-int main () {
-    int *vetor = (int*) malloc(5 * sizeof(int));
+int main()
+{
+    int *vetor = (int *)malloc(5 * sizeof(int));
 
-    for (int i = 0; i <= 5; i++) {
+    for (int i = 0; i <= 5; i++)
+    {
         int n;
         cout << "Digite um valor para a posicao " << i << " : ";
         cin >> n;
@@ -15,6 +17,6 @@ int main () {
         cout << n << endl;
         cout << vetor + i << endl;
     }
-    
+
     return 0;
 }
