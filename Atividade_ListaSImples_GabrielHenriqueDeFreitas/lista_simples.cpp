@@ -33,26 +33,19 @@ void inserir_ordenado(ListaSimples *lista, int valor)
         lista->inicio = no;
         return;
     }
-    else
+
+    No *atual = lista->inicio;
+
+    while (atual->proximo != nullptr && atual->proximo->valor < valor)
     {
-        No *atual = lista->inicio;
-        No *proximo = lista->inicio->proximo;
-
-        while (proximo != nullptr)
-        {
-            if (atual->valor < valor && proximo->valor > valor)
-            {
-                no->proximo = proximo;
-                atual->proximo = no;
-                break;
-            }
-            atual = proximo;
-            proximo = proximo->proximo;
-        }
-
-        atual->proximo = no;
+        atual = atual->proximo;
     }
+
+    no->proximo = atual->proximo;
+    atual->proximo = no;
 }
+
+void inverter_lista(ListaSimples *lista);
 
 void imprimir_lista_simples(ListaSimples *lista)
 {
@@ -95,6 +88,7 @@ int main()
 {
 
     ListaSimples *lista = criar_lista_simples();
+
     inserir_ordenado(lista, 10);
     inserir_ordenado(lista, 4);
     inserir_ordenado(lista, 20);
