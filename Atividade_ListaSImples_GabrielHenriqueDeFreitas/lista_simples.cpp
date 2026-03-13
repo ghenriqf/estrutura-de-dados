@@ -118,14 +118,21 @@ int main()
 
     ListaSimples *lista = criar_lista_simples();
 
-    inserir_ordenado(lista, 10);
-    inserir_ordenado(lista, 4);
-    inserir_ordenado(lista, 20);
-    inserir_ordenado(lista, 1);
     inserir_ordenado(lista, 50);
+    inserir_ordenado(lista, 10);
+    inserir_ordenado(lista, 30);
+
+    imprimir_lista_simples(lista);
+    cout << endl;
+    cout << contar_nos(lista) << endl;
+
+    inverter_lista(lista);
+    imprimir_lista_simples(lista);
+
+    cout << endl
+         << buscar_no(lista, 10);
 
     liberar_lista(lista);
-    imprimir_lista_simples(lista);
 
     return 0;
 }
