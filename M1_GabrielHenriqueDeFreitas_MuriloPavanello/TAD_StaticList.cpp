@@ -1,18 +1,7 @@
 #include <iostream>
+#include "TAD_StaticList.h"
 
 using namespace std;
-
-struct Sensor
-{
-    int value;
-};
-
-struct StaticList
-{
-    int capacity;
-    Sensor *sensors;
-    int elements_count;
-};
 
 StaticList *initialize_list(int capacity)
 {

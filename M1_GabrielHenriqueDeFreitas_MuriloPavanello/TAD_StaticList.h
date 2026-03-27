@@ -1,12 +1,12 @@
-#ifndef TAD_StaticList
-#define TAD_StaticList
+#ifndef TAD_STATICLIST_H
+#define TAD_STATICLIST_H
 
-typedef struct Sensor
+struct Sensor
 {
     int value;
 };
 
-typedef struct StaticList
+struct StaticList
 {
     int capacity;
     Sensor *sensors;
