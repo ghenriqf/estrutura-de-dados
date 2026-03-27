@@ -16,7 +16,6 @@ struct StaticList
 
 StaticList *initialize_list(int capacity)
 {
-
     if (capacity <= 0)
         return nullptr;
 
@@ -40,46 +39,28 @@ bool insert_sensor(Sensor sensor, StaticList *static_list)
     return true;
 }
 
-Sensor *remove_sensor(int value, StaticList *static_list)
+bool remove_sensor(int value, StaticList *static_list)
 {
-    for (int i = 0; i <= static_list->elements_count; i++)
+    for (int i = 0; i < static_list->elements_count; i++)
     {
-        Sensor *sensor = static_list->sensors;
+        if (static_list->sensors[i].value == value)
+        {
+            for (int j = i; j < static_list->elements_count - 1; j++)
+            {
+                static_list->sensors[j] = static_list->sensors[j + 1];
+            }
 
-        if (sensor->value == value)
-            return sensor;
-
-        sensor++;
+            static_list->elements_count--;
+            return true;
+        }
     }
-
-    return nullptr;
+    return false;
 }
 
 void print_sensor(StaticList *static_list)
 {
-    for (int i = 0; i <= static_list->capacity; i++)
+    for (int i = 0; i < static_list->elements_count; i++)
     {
-        cout << static_list->sensors->value << endl;
+        cout << static_list->sensors[i].value << endl;
     }
-}
-
-int main()
-{
-
-    StaticList *static_list = initialize_list(5);
-
-    Sensor sensor;
-    sensor.value = 10;
-
-    insert_sensor(sensor, static_list);
-    insert_sensor(sensor, static_list);
-    insert_sensor(sensor, static_list);
-    insert_sensor(sensor, static_list);
-    insert_sensor(sensor, static_list);
-    insert_sensor(sensor, static_list);
-    insert_sensor(sensor, static_list);
-
-    print_sensor(static_list);
-
-    return 0;
 }
