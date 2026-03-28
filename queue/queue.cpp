@@ -1,79 +1,118 @@
 #include <iostream>
 
-using namespace std;
+// Implementação simples de uma Queue (Fila) utilizando array circular
 
-struct Node
-{
-    string data;
-    Node *next;
+class Queue {
+private:
+  int *arr;
+  int capacity;
+  int size;
+  int front;
+  int rear;
+
+public:
+  Queue(int capacity) {
+    this->capacity = capacity;
+    arr = new int[capacity];
+    front = 0;
+    /*
+      inicializa o rear como -1 para que o primeiro elemento vá para a posição
+      0 ao avançar o índice
+    */
+    rear = -1;
+    size = 0;
+  }
+
+  // destrutor
+  ~Queue() { delete[] arr; }
+
+  // declaração dos métodos
+  bool enqueue(int value);
+  bool dequeue();
+  int getFront();
+  int getRear();
+  bool isFull();
+  bool isEmpty();
+  void print();
 };
 
-struct Queue
-{
-    Node *front;
-    Node *rear;
-};
+// implementação
 
-void init(Queue *queue)
-{
-    queue->front = nullptr;
-    queue->rear = nullptr;
+bool Queue::isFull() { return capacity == size; }
+
+bool Queue::isEmpty() { return size == 0; }
+
+int Queue::getFront() {
+  if (isEmpty()) {
+    return -1;
+  }
+
+  return arr[front];
 }
 
-void enqueue(Queue *queue, string data)
-{
-    Node *node = new Node;
-    node->data = data;
-    node->next = nullptr;
+int Queue::getRear() {
+  if (isEmpty()) {
+    return -1;
+  }
 
-    if (queue->front == nullptr)
-    {
-        queue->front = node;
-        queue->rear = node;
-    }
-
-    queue->rear->next = node;
-    queue->rear = node;
+  return arr[rear];
 }
 
-void dequeue(Queue *queue)
-{
-    Node *front = queue->front;
-    queue->front = front->next;
-
-    delete front;
-}
-
-bool is_empty(Queue *queue)
-{
-    if (queue->front == nullptr)
-        return true;
-
+bool Queue::enqueue(int value) { // método para enfileirar
+  if (isFull()) {
     return false;
+  }
+
+  /*
+    o módulo faz o índice dar a volta ao chegar no final do array, mantendo-o
+    sempre dentro dos limites
+  */
+
+  rear = (rear + 1) % capacity;
+  arr[rear] = value;
+  size++;
+
+  return true;
 }
 
-void print_queue(Queue *queue)
-{
-    Node *node = queue->front;
+bool Queue::dequeue() { // método para desenfileirar
+  if (isEmpty()) {
+    return false;
+  }
 
-    while (node != nullptr)
-    {
-        cout << node->data << " ";
-        node = node->next;
-    }
+  front = (front + 1) % capacity;
+  size--;
+
+  return true;
 }
 
-int main()
-{
-    Queue *queue = new Queue;
+void Queue::print() {
+  if (isEmpty()) {
+    return;
+  }
 
-    init(queue);
+  for (int i = 0; i < size; i++) {
+    int index = (front + i) % capacity;
 
-    enqueue(queue, "Murilo");
-    enqueue(queue, "Gabriel");
+    std::cout << arr[index] << " ";
+  }
+}
 
-    print_queue(queue);
-    dequeue(queue);
-    cout << endl;
-    print_queue(queue);
+int main() {
+
+  Queue queue(5);
+
+  queue.enqueue(1);
+  queue.enqueue(2);
+  queue.enqueue(3);
+  queue.enqueue(4);
+
+  queue.print();
+  std::cout << "\n";
+
+  queue.dequeue();
+
+  queue.print();
+
+  return 0;
 }
