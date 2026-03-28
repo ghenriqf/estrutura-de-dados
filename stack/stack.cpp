@@ -1,112 +1,75 @@
 #include <iostream>
 
-using namespace std;
+// implementação de uma Stack (Pilha)
 
-struct Stack {
-    int* data;
-    int top;
-    int capacity;
+class Stack {
+private:
+  int top;
+  int capacity;
+  int *arr;
+
+public:
+  Stack(int capacity) {
+    this->capacity = capacity;
+    top = -1; // representa stack vazia
+    arr = new int[capacity];
+  }
+
+  // destrutor
+  ~Stack() { delete[] arr; }
+
+  bool push(int value);
+  int pop();
+  int peek();
+  void print();
 };
 
-bool init(Stack* s, int initialCapacity = 4) {
-    s->data = new(nothrow) int[initialCapacity];
-    if (s->data == nullptr) return false;
+// implementação
 
-    s->top = -1;
-    s->capacity = initialCapacity;
-    return true;
+// método para adicionar elemento no topo da pilha
+bool Stack::push(int value) {
+  if (top >= capacity - 1) {
+    return false; // stack overflow
+  }
+
+  arr[++top] = value; //
+  return true;
 }
 
-bool isEmpty(const Stack* s) {
-    return s->top == -1;
+// método para remover elemento do topo da pilha
+int Stack::pop() {
+  if (top < 0) {
+    return -1; // stack underflow
+  }
+
+  return arr[top--];
 }
 
-bool resize(Stack* s) {
-    int newCapacity = s->capacity * 2;
-    int* newData = new(nothrow) int[newCapacity];
+// método para retornar o elemento do topo da pilha
+int Stack::peek() {
+  if (top < 0) {
+    return -1; // stack vazia
+  }
 
-    if (newData == nullptr) return false;
-
-    for (int i = 0; i <= s->top; i++) {
-        newData[i] = s->data[i];
-    }
-
-    delete[] s->data;
-    s->data = newData;
-    s->capacity = newCapacity;
-
-    return true;
+  return arr[top];
 }
 
-bool push(Stack* s, int value) {
-    if (s->top == s->capacity - 1) {
-        if (!resize(s)) return false;
-    }
-
-    s->data[++(s->top)] = value;
-    return true;
-}
-
-bool pop(Stack* s, int* out) {
-    if (isEmpty(s)) return false;
-
-    *out = s->data[(s->top)--];
-    return true;
-}
-
-bool peek(const Stack* s, int* out) {
-    if (isEmpty(s)) return false;
-
-    *out = s->data[s->top];
-    return true;
-}
-
-void print(const Stack* s) {
-    if (isEmpty(s)) {
-        cout << "Stack vazia\n";
-        return;
-    }
-
-    cout << "Topo -> ";
-    for (int i = s->top; i >= 0; i--) {
-        cout << s->data[i] << " ";
-    }
-    cout << "\n";
-}
-
-void clear(Stack* s) {
-    delete[] s->data;
-    s->data = nullptr;
-    s->top = -1;
-    s->capacity = 0;
+void Stack::print() {
+  for (int i = top; i >= 0; i--) {
+    std::cout << arr[i] << " ";
+  }
 }
 
 int main() {
-    Stack s;
 
-    if (!init(&s)) {
-        cout << "Erro de memoria!\n";
-        return 1;
-    }
+  Stack stack = Stack(5);
 
-    for (int i = 1; i <= 10; i++) {
-        push(&s, i * 10);
-    }
+  stack.push(10);
+  stack.push(20);
+  stack.push(30);
+  stack.push(40);
+  stack.push(50);
 
-    print(&s);
-
-    int value;
-
-    if (peek(&s, &value)) {
-        cout << "Topo: " << value << "\n";
-    }
-
-    if (pop(&s, &value)) {
-        cout << "Removido: " << value << "\n";
-    }
-
-    print(&s);
-
-    clear(&s);
-    return 0;
+  stack.print();
+  return 0;
 }
