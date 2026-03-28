@@ -3,13 +3,13 @@
 
 struct Node
 {
-    int data;
+    Load load;
     Node *next;
 };
 
 struct LinkedList
 {
-    Node head;
+    Node *head;
 };
 
 struct Load
@@ -17,7 +17,8 @@ struct Load
     int value;
 };
 
-bool insert_load(Load load, LinkedList *linked_list);
+void insert_load(Load load, LinkedList *linked_list);
 bool remove_load(int value, LinkedList *linked_list);
+LinkedList *initialize_linked_list();
 
 #endif
