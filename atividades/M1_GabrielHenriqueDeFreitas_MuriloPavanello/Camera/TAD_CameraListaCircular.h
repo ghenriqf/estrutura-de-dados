@@ -1,15 +1,15 @@
 #ifndef TAD_CAMERA_LISTA_CIRCULAR_H
 #define TAD_CAMERA_LISTA_CIRCULAR_H
 
-struct No
+struct NoCamera
 {
   int camera;
-  No *proximo;
+  NoCamera *proximo;
 };
 
 struct CameraListaCircular
 {
-  No *cabeca;
+  NoCamera *cabeca;
 };
 
 void inserirCamera(int valor, CameraListaCircular *lista);

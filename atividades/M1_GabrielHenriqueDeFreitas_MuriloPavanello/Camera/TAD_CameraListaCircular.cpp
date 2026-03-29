@@ -10,7 +10,7 @@ CameraListaCircular *inicializarListaCircular()
 
 void inserirCamera(int valor, CameraListaCircular *lista)
 {
-  No *novoNo = new No;
+  NoCamera *novoNo = new NoCamera;
   novoNo->camera = valor;
 
   if (lista->cabeca == nullptr)
@@ -20,7 +20,7 @@ void inserirCamera(int valor, CameraListaCircular *lista)
     return;
   }
 
-  No *temporario = lista->cabeca;
+  NoCamera *temporario = lista->cabeca;
 
   while (temporario->proximo != lista->cabeca)
   {
@@ -36,7 +36,7 @@ bool removerCamera(int valor, CameraListaCircular *lista)
   if (lista->cabeca == nullptr)
     return false;
 
-  No *atual = lista->cabeca;
+  NoCamera *atual = lista->cabeca;
 
   if (lista->cabeca->camera == valor)
   {
@@ -47,7 +47,7 @@ bool removerCamera(int valor, CameraListaCircular *lista)
       return true;
     }
 
-    No *ultimo = lista->cabeca;
+    NoCamera *ultimo = lista->cabeca;
 
     while (ultimo->proximo != lista->cabeca)
     {
@@ -61,7 +61,7 @@ bool removerCamera(int valor, CameraListaCircular *lista)
     return true;
   }
 
-  No *anterior = lista->cabeca;
+  NoCamera *anterior = lista->cabeca;
   atual = lista->cabeca->proximo;
 
   while (atual != lista->cabeca)

@@ -11,7 +11,7 @@ HangarFila *inicializarFila()
 
 void enqueue(int valor, HangarFila *fila)
 {
-  No *novoNo = new No;
+  NoHangar *novoNo = new NoHangar;
   novoNo->valor = valor;
   novoNo->proximo = nullptr;
 
@@ -33,7 +33,7 @@ void enqueue(int valor, HangarFila *fila)
 
 void dequeue(HangarFila *fila)
 {
-  No *temp = fila->frente;
+  NoHangar *temp = fila->frente;
 
   if (fila->frente == nullptr)
   {

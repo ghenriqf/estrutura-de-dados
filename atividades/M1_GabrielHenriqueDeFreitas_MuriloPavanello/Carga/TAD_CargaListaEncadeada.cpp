@@ -11,7 +11,7 @@ CargaListaEncadeada *inicializarListaEncadeada()
 
 void inserirCarga(int valor, CargaListaEncadeada *lista)
 {
-  No *novoNo = new No;
+  NoCarga *novoNo = new NoCarga;
   novoNo->carga = valor;
   novoNo->proximo = nullptr;
 
@@ -28,7 +28,7 @@ void inserirCarga(int valor, CargaListaEncadeada *lista)
 
 bool removerCarga(int valor, CargaListaEncadeada *lista)
 {
-  No *atual = lista->cabeca;
+  NoCarga *atual = lista->cabeca;
 
   if (lista->cabeca == nullptr)
   {
@@ -37,7 +37,7 @@ bool removerCarga(int valor, CargaListaEncadeada *lista)
 
   if (lista->cabeca->carga == valor)
   {
-    No *temporario = lista->cabeca;
+    NoCarga *temporario = lista->cabeca;
     lista->cabeca = lista->cabeca->proximo;
     delete temporario;
 
@@ -51,7 +51,7 @@ bool removerCarga(int valor, CargaListaEncadeada *lista)
 
   if (atual->proximo != nullptr)
   {
-    No *temporario = atual->proximo;
+    NoCarga *temporario = atual->proximo;
     atual->proximo = atual->proximo->proximo;
 
     delete temporario;

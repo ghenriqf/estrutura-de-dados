@@ -1,15 +1,15 @@
 #ifndef TAD_CARGA_LISTA_ENCADEADA_H
 #define TAD_CARGA_LISTA_ENCADEADA_H
 
-struct No
+struct NoCarga
 {
   int carga;
-  No *proximo;
+  NoCarga *proximo;
 };
 
 struct CargaListaEncadeada
 {
-  No *cabeca;
+  NoCarga *cabeca;
 };
 
 void inserirCarga(int valor, CargaListaEncadeada *lista);

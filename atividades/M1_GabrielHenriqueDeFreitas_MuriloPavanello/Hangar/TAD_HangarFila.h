@@ -1,16 +1,16 @@
 #ifndef TAD_HANGAR_FILA_H
 #define TAD_HANGAR_FILA_H
 
-struct No
+struct NoHangar
 {
   int valor;
-  No *proximo;
+  NoHangar *proximo;
 };
 
 struct HangarFila
 {
-  No *frente;
-  No *calda;
+  NoHangar *frente;
+  NoHangar *calda;
 };
 
 void enqueue(int valor, HangarFila *fila);

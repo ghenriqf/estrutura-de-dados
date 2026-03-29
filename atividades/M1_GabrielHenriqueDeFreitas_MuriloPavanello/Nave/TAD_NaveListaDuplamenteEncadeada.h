@@ -3,21 +3,21 @@
 #include <iostream>
 using namespace std;
 
-struct No
+struct NoNave
 {
   string nome;
-  No *proximo;
-  No *anterior;
+  NoNave *proximo;
+  NoNave *anterior;
 };
 
 struct NaveListaDuplamenteEncadeada
 {
-  No *cabeca;
-  No *calda;
+  NoNave *cabeca;
+  NoNave *calda;
 };
 
 void inserirNave(string nome, NaveListaDuplamenteEncadeada *lista);
 bool removerNave(string nome, NaveListaDuplamenteEncadeada *lista);
-NaveListaDuplamenteEncadeada *inicializarListaEncadeada();
+NaveListaDuplamenteEncadeada *inicializarListaDuplamenteEncadeada();
 
 #endif
