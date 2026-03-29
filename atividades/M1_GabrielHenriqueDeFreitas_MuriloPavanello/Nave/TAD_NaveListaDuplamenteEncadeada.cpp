@@ -1,17 +1,15 @@
-#include <iostream>
+#include "TAD_NaveListaDuplamenteEncadeada.h"
 
-#include "TAD_NaveListaEncadeada.h"
-
-NaveListaEncadeada *inicializarListaEncadeada()
+NaveListaDuplamenteEncadeada *inicializarListaEncadeada()
 {
-  NaveListaEncadeada *lista = new NaveListaEncadeada;
+  NaveListaDuplamenteEncadeada *lista = new NaveListaDuplamenteEncadeada;
   lista->cabeca = nullptr;
   lista->calda = nullptr;
 
   return lista;
 }
 
-void inserirNave(string nome, NaveListaEncadeada *lista)
+void inserirNave(string nome, NaveListaDuplamenteEncadeada *lista)
 {
   No *novoNo = new No;
   novoNo->nome = nome;
@@ -30,8 +28,11 @@ void inserirNave(string nome, NaveListaEncadeada *lista)
   lista->calda = novoNo;
 }
 
-bool removerNave(string nome, NaveListaEncadeada *lista)
+bool removerNave(string nome, NaveListaDuplamenteEncadeada *lista)
 {
+  if (lista->cabeca == nullptr)
+    return false;
+
   No *atual = lista->cabeca;
 
   while (atual != nullptr)

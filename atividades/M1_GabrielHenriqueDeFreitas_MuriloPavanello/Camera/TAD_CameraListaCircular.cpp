@@ -1,4 +1,3 @@
-#include <iostream>
 #include "TAD_CameraListaCircular.h"
 
 CameraListaCircular *inicializarListaCircular()
@@ -13,12 +12,12 @@ void inserirCamera(int valor, CameraListaCircular *lista)
 {
   No *novoNo = new No;
   novoNo->camera = valor;
-  novoNo->proximo = nullptr;
 
   if (lista->cabeca == nullptr)
   {
     lista->cabeca = novoNo;
     novoNo->proximo = lista->cabeca;
+    return;
   }
 
   No *temporario = lista->cabeca;
@@ -34,6 +33,9 @@ void inserirCamera(int valor, CameraListaCircular *lista)
 
 bool removerCamera(int valor, CameraListaCircular *lista)
 {
+  if (lista->cabeca == nullptr)
+    return false;
+
   No *atual = lista->cabeca;
 
   if (lista->cabeca->camera == valor)
@@ -42,7 +44,7 @@ bool removerCamera(int valor, CameraListaCircular *lista)
     {
       delete lista->cabeca;
       lista->cabeca = nullptr;
-      return;
+      return true;
     }
 
     No *ultimo = lista->cabeca;
@@ -56,7 +58,7 @@ bool removerCamera(int valor, CameraListaCircular *lista)
     ultimo->proximo = lista->cabeca;
 
     delete atual;
-    return;
+    return true;
   }
 
   No *anterior = lista->cabeca;
@@ -68,10 +70,12 @@ bool removerCamera(int valor, CameraListaCircular *lista)
     {
       anterior->proximo = atual->proximo;
       delete atual;
-      return;
+      return true;
     }
 
     anterior = atual;
     atual = atual->proximo;
   }
+
+  return false;
 }

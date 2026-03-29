@@ -1,16 +1,15 @@
-#include "TAD_CargaListaDuplamenteEncadeada.h"
-#include <iostream>
+#include "TAD_CargaListaEncadeada.h"
 
-CargaListaDuplamenteEncadeada *inicializarListaEncadeada()
+CargaListaEncadeada *inicializarListaEncadeada()
 {
-  CargaListaDuplamenteEncadeada *lista = new CargaListaDuplamenteEncadeada;
+  CargaListaEncadeada *lista = new CargaListaEncadeada;
 
   lista->cabeca = nullptr;
 
   return lista;
 }
 
-void inserirCarga(int valor, CargaListaDuplamenteEncadeada *lista)
+void inserirCarga(int valor, CargaListaEncadeada *lista)
 {
   No *novoNo = new No;
   novoNo->carga = valor;
@@ -25,11 +24,9 @@ void inserirCarga(int valor, CargaListaDuplamenteEncadeada *lista)
 
   novoNo->proximo = lista->cabeca;
   lista->cabeca = novoNo;
-
-  return;
 }
 
-bool removerCarga(int valor, CargaListaDuplamenteEncadeada *lista)
+bool removerCarga(int valor, CargaListaEncadeada *lista)
 {
   No *atual = lista->cabeca;
 

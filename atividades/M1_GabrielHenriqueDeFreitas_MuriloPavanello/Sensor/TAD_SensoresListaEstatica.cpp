@@ -1,5 +1,4 @@
 #include "TAD_SensoresListaEstatica.h"
-#include <iostream>
 
 SensoresListaEstatica *inicializarListaEstatica()
 {
