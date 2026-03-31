@@ -78,3 +78,15 @@ string HashTable::get(int key) {
 
   return "";
 }
+
+void HashTable::remove(int key) {
+  int index = hashFunction(key);
+
+  Node *current = table[index];
+
+  while (current != nullptr) {
+    if (current->key == key) {
+      
+    }
+  }
+}
