@@ -1,83 +1,103 @@
 #include <iostream>
 using namespace std;
 
-#define TAMANHO 11
+class Node {
+public:
+  int key;
+  string value;
+  Node *next;
 
-struct Aluno
-{
-    int matricula;
-    string nome;
+  Node(int key, string value) {
+    this->key = key;
+    this->value = value;
+    this->next = nullptr;
+  }
 };
 
-struct Node
-{
-    Aluno aluno;
-    Node *next;
-};
+class HashTable {
+private:
+  static const int SIZE = 11;
+  Node *table[SIZE];
 
-struct HashTable
-{
-    Node *dados[TAMANHO];
-};
+  int hashFunction(int key) { return key % SIZE; }
 
-int hash_function(int key)
-{
-    return key % TAMANHO;
-}
-
-void insert(Aluno aluno, HashTable *hash_table)
-{
-    int key = hash_function(aluno.matricula);
-
-    Node *node = new Node;
-    node->next = nullptr;
-    node->aluno = aluno;
-
-    node->next = hash_table->dados[key];
-    hash_table->dados[key] = node;
-}
-
-void print_alunos(HashTable *hash_table)
-{
-    for (int i = 0; i < TAMANHO; i++)
-    {
-        Node *node = hash_table->dados[i];
-
-        if (node == nullptr)
-        {
-            continue;
-        }
-
-        if (node->next != nullptr)
-        {
-            while (node->next != nullptr)
-            {
-                cout << node->aluno.nome << endl;
-                node = node->next;
-            }
-        }
-
-        cout << node->aluno.nome << endl;
+public:
+  HashTable() {
+    for (int i = 0; i < SIZE; i++) {
+      table[i] = nullptr;
     }
+  }
+
+  ~HashTable() {
+    for (int i = 0; i < SIZE; i++) {
+      Node *current = table[i];
+
+      while (current != nullptr) {
+        Node *temp = current;
+        current = current->next;
+        delete temp;
+      }
+    }
+  }
+
+  void put(int key, string value);
+  string get(int key);
+  void remove(int key);
+};
+
+void HashTable::put(int key, string value) {
+  int index = hashFunction(key);
+
+  Node *current = table[index];
+
+  while (current != nullptr) {
+    if (current->key == key) {
+      current->value = value;
+      return;
+    }
+    current = current->next;
+  }
+
+  Node *newNode = new Node(key, value);
+  newNode->next = table[index];
+
+  table[index] = newNode;
 }
 
-int main()
-{
-    HashTable *hash_table = (HashTable *)calloc(TAMANHO, sizeof(HashTable));
+string HashTable::get(int key) {
+  int index = hashFunction(key);
 
-    Aluno aluno1 = {123, "Gabriel"};
-    Aluno aluno2 = {456, "Henrique"};
-    Aluno aluno3 = {789, "Freitas"};
-    Aluno aluno4 = {101112, "Murilo"};
-    Aluno aluno5 = {101112, "Pedro"};
+  Node *current = table[index];
 
-    insert(aluno1, hash_table);
-    insert(aluno2, hash_table);
-    insert(aluno3, hash_table);
-    insert(aluno4, hash_table);
-    insert(aluno5, hash_table);
+  while (current != nullptr) {
+    if (current->key == key) {
+      return current->value;
+    }
+    current = current->next;
+  }
 
-    print_alunos(hash_table);
+  return "";
+}
 
-    return 0;
+void HashTable::remove(int key) {
+  int index = hashFunction(key);
+
+  Node *current = table[index];
+  Node *prev = nullptr;
+
+  while (current != nullptr) {
+    if (current->key == key) {
+      if (prev == nullptr) {
+        table[index] = current->next;
+      } else {
+        prev->next = current->next;
+      }
+
+      delete current;
+      return;
+    }
+
+    prev = current;
+    current = current->next;
+  }
 }

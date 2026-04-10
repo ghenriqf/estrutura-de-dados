@@ -13,7 +13,6 @@ void enqueue(int valor, HangarFila *fila)
 {
   NoHangar *novoNo = new NoHangar;
   novoNo->valor = valor;
-  novoNo->proximo = nullptr;
 
   if (fila->frente == nullptr && fila->calda == nullptr)
   {
