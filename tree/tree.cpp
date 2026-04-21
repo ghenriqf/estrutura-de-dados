@@ -1,87 +1,75 @@
 #include <iostream>
 using namespace std;
 
-struct No {
-  int valor;
-  No *esquerda;
-  No *direita;
+class Node {
+public:
+  int data;
+
+  Node *left;
+  Node *right;
+
+  Node(int data);
 };
 
-No *criarNo(int valor) {
-  No *novoNo = new No;
-  novoNo->valor = valor;
-  novoNo->esquerda = nullptr;
-  novoNo->direita = nullptr;
-
-  return novoNo;
+Node::Node(int data) {
+  this->data = data;
+  this->left = nullptr;
+  this->right = nullptr;
 }
 
-bool isBST(No *arvore, int minimo, int maximo) {
-  No *atual = arvore;
+class Tree {
+private:
+  Node *root;
 
-  if (atual == nullptr) {
-    return true;
+  // inserção com recursividade
+  Node *insert(Node *node, int data) {
+    if (node == nullptr) {
+      return new Node(data);
+    }
+
+    if (data < node->data) {
+      node->left = insert(node->left, data);
+    } else {
+      node->right = insert(node->right, data);
+    }
+
+    return node;
   }
 
-  if (atual->valor < minimo || atual->valor > maximo) {
-    return false;
+  void inorder(Node *node) {
+    if (node != nullptr) {
+      inorder(node->left);
+      cout << node->data << " ";
+      inorder(node->right);
+    }
   }
 
-  return isBST(atual->esquerda, minimo, atual->valor - 1) &&
-         isBST(atual->direita, maximo, atual->valor + 1);
-}
+  bool search(Node *node, int value) {
+    if (node == nullptr) {
+      return false;
+    }
 
-No *inserir(No *arvore, int valor) {
-  No *atual = arvore;
+    if (node->data == value) {
+      return true;
+    }
 
-  if (arvore == nullptr) {
-    return criarNo(valor);
+    if (value < node->data) {
+      return search(node->left, value);
+    } else {
+      return search(node->right, value);
+    }
   }
 
-  if (valor < atual->valor) {
-    atual->esquerda = inserir(atual->esquerda, valor);
-  } else {
-    atual->direita = inserir(atual->direita, valor);
+public:
+  Tree() { this->root = nullptr; }
+  ~Tree();
+  // interfaces
+  void insert(int data) { root = insert(root, data); }
+
+  void inorder() {
+    inorder(root);
+    cout << endl;
   }
 
-  return atual;
-}
-
-int contarFolhas(No *arvore) {
-  No *atual = arvore;
-
-  if (atual == nullptr) {
-    return 0;
-  }
-
-  if (atual->esquerda == nullptr && atual->esquerda == nullptr) {
-    return 1;
-  }
-
-  return contarFolhas(atual->esquerda) + contarFolhas(atual->direita);
-}
-
-void inOrder(No *arvore) {
-  No *atual = arvore;
-  if (atual != nullptr) {
-    inOrder(atual->esquerda);
-    cout << atual->valor << endl;
-    inOrder(atual->direita);
-  }
-}
-
-int main() {
-  No *arvore = nullptr;
-  arvore = inserir(arvore, 10);
-
-  inserir(arvore, 30);
-  inserir(arvore, 20);
-  inserir(arvore, 50);
-  inserir(arvore, 70);
-  inserir(arvore, 60);
-  inserir(arvore, 30);
-
-  inOrder(arvore);
-
-  cout << contarFolhas(arvore);
-}
+  bool search(int value) { return search(root, value); }
+};
