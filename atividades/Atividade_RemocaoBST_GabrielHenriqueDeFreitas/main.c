@@ -92,18 +92,45 @@ int main() {
   int values[11] = {50, 30, 70, 20, 40, 60, 80, 15, 25, 35, 45};
   Node *root = NULL;
 
+  // Inserção
   for (int i = 0; i < 11; i++) {
     root = insert(root, values[i]);
   }
 
+  // Estado inicial
+  printf("Arvore original (in-order):\n");
   inorder(root);
+  printf("\n\n");
 
+  // Remover 15
   root = removeNode(root, 15);
-  root = removeNode(root, 20);
-  root = removeNode(root, 30);
-  root = removeNode(root, 70);
-  root = removeNode(root, 50);
-
-  printf("\n");
+  printf("Apos remover 15:\n");
   inorder(root);
+  printf("\n\n");
+
+  // Remover 20
+  root = removeNode(root, 20);
+  printf("Apos remover 20:\n");
+  inorder(root);
+  printf("\n\n");
+
+  // Remover 30
+  root = removeNode(root, 30);
+  printf("Apos remover 30:\n");
+  inorder(root);
+  printf("\n\n");
+
+  // Remover 70
+  root = removeNode(root, 70);
+  printf("Apos remover 70:\n");
+  inorder(root);
+  printf("\n\n");
+
+  // Remover 50
+  root = removeNode(root, 50);
+  printf("Apos remover 50 (estado final):\n");
+  inorder(root);
+  printf("\n");
+
+  return 0;
 }
