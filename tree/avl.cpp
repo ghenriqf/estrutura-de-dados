@@ -9,6 +9,7 @@ class AVL {
     Node *right;
     int getHeight;
   };
+
   Node *root = nullptr;
 
   int maxUtility(Node *current) {
@@ -25,49 +26,54 @@ class AVL {
   }
 
   Node *rightRotation(Node *current) {
-    Node *new_Node = current->left;
+    Node *new_node = current->left;
 
-    current->left = new_Node->right;
+    current->left = new_node->right;
 
-    new_Node->right = current;
+    new_node->right = current;
 
-    current->getHeight = 1 + max(getHeight(current->left), getHeight(current->right));
-    new_Node->getHeight = 1 + max(getHeight(new_Node->left), getHeight(new_Node->right));
+    current->getHeight =
+        1 + max(getHeight(current->left), getHeight(current->right));
+    new_node->getHeight =
+        1 + max(getHeight(new_node->left), getHeight(new_node->right));
 
-    return new_Node;
+    return new_node;
   }
 
   Node *leftRotation(Node *current) {
-    Node *new_Node = current->right;
+    Node *new_node = current->right;
 
-    current->right = new_Node->left;
-    new_Node->left = current;
+    current->right = new_node->left;
+    new_node->left = current;
 
-    current->getHeight = 1 + max(getHeight(current->left), getHeight(current->right));
-    new_Node->getHeight = 1 + max(getHeight(new_Node->left), getHeight(new_Node->right));
+    current->getHeight =
+        1 + max(getHeight(current->left), getHeight(current->right));
+    new_node->getHeight =
+        1 + max(getHeight(new_node->left), getHeight(new_node->right));
 
-    return new_Node;
+    return new_node;
   }
 
   Node *insert(Node *current, int value) {
     if (current == nullptr) {
-      Node *new_Node = new Node;
+      Node *new_node = new Node;
 
-      new_Node->data = value;
+      new_node->data = value;
 
-      new_Node->right = nullptr;
-      new_Node->left = nullptr;
+      new_node->right = nullptr;
+      new_node->left = nullptr;
 
-      new_Node->getHeight = 1;
-      current = new_Node;
-      return new_Node;
+      new_node->getHeight = 1;
+      current = new_node;
+      return new_node;
     }
     if (value < current->data)
       current->left = insert(current->left, value);
     else if (value > current->data)
       current->right = insert(current->right, value);
 
-    current->getHeight = 1 + max(getHeight(current->left), getHeight(current->right));
+    current->getHeight =
+        1 + max(getHeight(current->left), getHeight(current->right));
     int balance = getHeight(current->left) - getHeight(current->right);
 
     if (balance > 1) {
@@ -88,6 +94,22 @@ class AVL {
     return current;
   }
 
+  void inorder(Node *root) {
+    if (root != nullptr) {
+      inorder(root->left);
+      cout << root->data << " ";
+      inorder(root->right);
+    }
+  }
+
 public:
   void insert(int value) { root = insert(root, value); }
+  void inorder() { inorder(root); }
 };
+
+int main() {
+  AVL tree;
+  tree.insert(10);
+  tree.insert(20);
+  tree.inorder();
+}
